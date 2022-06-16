@@ -1,0 +1,36 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class TestingInputSystem : MonoBehaviour
+{
+   [SerializeField] float speed = 5f;
+
+    PlayerInput playerInput;
+    PlayerInputActions playerInputActions;
+	
+    Rigidbody rb;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        playerInput = GetComponent<PlayerInput>();
+
+	playerInputActions = new PlayerInputActions();
+        playerInputActions.Player.Enable();
+        playerInputActions.Player.Jump.performed += Jump;
+    }
+
+    void FixedUpdate()
+    {
+	Vector2 inputVec = playerInputActions.Player.Movement.ReadValue<Vector2>();
+    	rb.Velocity = new Vector3(inputVec.x, 0, inputVec.y) * speed; 
+    }
+
+    private void Jump(InputAction.CallbackContext context)
+    {
+        rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+    }
+}
