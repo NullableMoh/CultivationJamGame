@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: c413c3ab2f0864e42b363805ceaa296c
+guid: 9875a6fcfb0fd23478c145d3cf92ce16
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bedPillow
+    second: {fileID: 2100000, guid: 45a88ad783883d940b2f3dddcdeb9c54, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bedding
+    second: {fileID: 2100000, guid: 4226b94af58e48248ab1bf8b0f5f6220, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

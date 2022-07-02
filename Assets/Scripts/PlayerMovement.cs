@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool isGrounded = true;
     Vector3 gravityMoveVec;
-    PlayerInputActions inputActions;
+    PlayerCharacterInputActions inputActions;
     CharacterController characterController;
 
     private void Awake()

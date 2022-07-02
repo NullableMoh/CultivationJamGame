@@ -53,6 +53,15 @@ public partial class @PlayerCharacterInputActions : IInputActionCollection2, IDi
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ToggleHoldObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""0306eb63-ffe0-421e-94f9-3d27ecd9dcbd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @PlayerCharacterInputActions : IInputActionCollection2, IDi
                     ""action"": ""MouseLook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46240134-170d-4335-a35b-e89afc07dde7"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleHoldObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @PlayerCharacterInputActions : IInputActionCollection2, IDi
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_MouseLook = m_Player.FindAction("MouseLook", throwIfNotFound: true);
+        m_Player_ToggleHoldObject = m_Player.FindAction("ToggleHoldObject", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,6 +226,7 @@ public partial class @PlayerCharacterInputActions : IInputActionCollection2, IDi
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_MouseLook;
+    private readonly InputAction m_Player_ToggleHoldObject;
     public struct PlayerActions
     {
         private @PlayerCharacterInputActions m_Wrapper;
@@ -212,6 +234,7 @@ public partial class @PlayerCharacterInputActions : IInputActionCollection2, IDi
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @MouseLook => m_Wrapper.m_Player_MouseLook;
+        public InputAction @ToggleHoldObject => m_Wrapper.m_Player_ToggleHoldObject;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -230,6 +253,9 @@ public partial class @PlayerCharacterInputActions : IInputActionCollection2, IDi
                 @MouseLook.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseLook;
                 @MouseLook.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseLook;
                 @MouseLook.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseLook;
+                @ToggleHoldObject.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleHoldObject;
+                @ToggleHoldObject.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleHoldObject;
+                @ToggleHoldObject.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleHoldObject;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -243,6 +269,9 @@ public partial class @PlayerCharacterInputActions : IInputActionCollection2, IDi
                 @MouseLook.started += instance.OnMouseLook;
                 @MouseLook.performed += instance.OnMouseLook;
                 @MouseLook.canceled += instance.OnMouseLook;
+                @ToggleHoldObject.started += instance.OnToggleHoldObject;
+                @ToggleHoldObject.performed += instance.OnToggleHoldObject;
+                @ToggleHoldObject.canceled += instance.OnToggleHoldObject;
             }
         }
     }
@@ -252,5 +281,6 @@ public partial class @PlayerCharacterInputActions : IInputActionCollection2, IDi
         void OnJump(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnMouseLook(InputAction.CallbackContext context);
+        void OnToggleHoldObject(InputAction.CallbackContext context);
     }
 }
