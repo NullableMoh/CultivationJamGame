@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Mixable : MonoBehaviour
 {
-    [SerializeField] BaseOrgan baseOrgan;
-    [SerializeField] GameObject newMixedOrgan;
+    [SerializeField] private BaseOrgan baseOrgan;
+    [SerializeField] private GameObject newMixedOrgan;
 
     private void OnCollisionEnter(Collision collision)
     {

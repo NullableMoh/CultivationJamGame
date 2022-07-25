@@ -6,19 +6,19 @@ using Debug = UnityEngine.Debug;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] bool enableJump = false;
-    [SerializeField] float moveSpeed = 30f;
-    [SerializeField] float jumpPower = 50f;
-    [SerializeField] float accelDueToGravity = -2f;
+    [SerializeField] private bool enableJump = false;
+    [SerializeField] private float moveSpeed = 30f;
+    [SerializeField] private float jumpPower = 50f;
+    [SerializeField] private float accelDueToGravity = -2f;
 
-    [SerializeField] float groundCheckDistance = 4.3f;
+    [SerializeField] private float groundCheckDistance = 4.3f;
 
-    Vector3 moveVecNoGravity;
+    private Vector3 moveVecNoGravity;
 
-    bool isGrounded = true;
-    Vector3 gravityMoveVec;
-    PlayerCharacterInputActions inputActions;
-    CharacterController characterController;
+    private bool isGrounded = true;
+    private Vector3 gravityMoveVec;
+    private PlayerCharacterInputActions inputActions;
+    private CharacterController characterController;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         inputActions.Player.Enable();
     }
 
-    void Update()
+    private void Update()
     {
         //move
         Vector2 inputVec = inputActions.Player.Movement.ReadValue<Vector2>();   

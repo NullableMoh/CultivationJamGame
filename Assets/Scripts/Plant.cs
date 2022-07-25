@@ -6,9 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class Plant : MonoBehaviour
 {
-    [SerializeField] GameObject[] acceptableFoods;
+    [SerializeField] private GameObject[] acceptableFoods;
+    [SerializeField] private GameObject acceptedParticleSystem;
+    [SerializeField] private GameObject rejectedParticleSystem;
 
-    GameObject currentFood;
+    private GameObject currentParticleSystem;
+    private GameObject currentFood;
+    
+    //events
+    public delegate void FoodAcceptedEventHandler();
+    public event FoodAcceptedEventHandler OnFoodAccepted;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -19,7 +26,6 @@ public class Plant : MonoBehaviour
             if(food.CompareTag(collision.gameObject.tag))
             {
                 currentFood = collision.gameObject;
-                Debug.Log("Food Accepted");
                 badFood = false;
                 break;
             }
@@ -28,11 +34,26 @@ public class Plant : MonoBehaviour
         }
 
         if(badFood)
-            RestartLevel();
+        {
+            FoodRejected();
+        }
+        else
+        {
+            FoodAccepted();
+        }
     }
 
-    private void RestartLevel()
+    private void FoodAccepted()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Destroy(currentParticleSystem);
+        currentParticleSystem = Instantiate(acceptedParticleSystem, transform.position, Quaternion.Euler(-90f,0f,0f));
+        Destroy(currentFood);
+        OnFoodAccepted?.Invoke();
+    }
+
+    private void FoodRejected()
+    {
+        Destroy(currentParticleSystem);
+        currentParticleSystem = Instantiate(rejectedParticleSystem, transform.position, Quaternion.Euler(-90f, 0f, 0f));
     }
 }

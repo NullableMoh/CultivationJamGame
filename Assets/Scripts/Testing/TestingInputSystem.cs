@@ -6,18 +6,18 @@ using UnityEngine.InputSystem;
 
 public class TestingInputSystem : MonoBehaviour
 {
-    [SerializeField] float speed = 5f;
-    [SerializeField] float jumpPower = 10f;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float jumpPower = 10f;
 
-    Vector2 inputVec;
-    float jumpInput;
+    private Vector2 inputVec;
+    private float jumpInput;
 
-    PlayerInput playerInput;
-    PlayerInputActions playerInputActions;
+    private PlayerInput playerInput;
+    private PlayerInputActions playerInputActions;
 
-    Rigidbody rb;
+    private Rigidbody rb;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
@@ -69,7 +69,7 @@ public class TestingInputSystem : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         rb.velocity = new Vector3(inputVec.x * speed, rb.velocity.y, inputVec.y * speed);
     }

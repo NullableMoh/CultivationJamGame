@@ -5,38 +5,39 @@ using UnityEditor;
 using System;
 using System.IO;
 using System.Reflection;
+using UnityEngine.Serialization;
 
 [CustomEditor(typeof(Readme))]
 [InitializeOnLoad]
 public class ReadmeEditor : Editor
 {
-    static string s_ShowedReadmeSessionStateName = "ReadmeEditor.showedReadme";
-    
-    static string s_ReadmeSourceDirectory = "Assets/TutorialInfo";
+    private static string sShowedReadmeSessionStateName = "ReadmeEditor.showedReadme";
 
-    const float k_Space = 16f;
+    private static string sReadmeSourceDirectory = "Assets/TutorialInfo";
+
+    private const float KSpace = 16f;
 
     static ReadmeEditor()
     {
         EditorApplication.delayCall += SelectReadmeAutomatically;
     }
 
-    static void RemoveTutorial()
+    private static void RemoveTutorial()
     {
         if (EditorUtility.DisplayDialog("Remove Readme Assets",
             
-            $"All contents under {s_ReadmeSourceDirectory} will be removed, are you sure you want to proceed?",
+            $"All contents under {sReadmeSourceDirectory} will be removed, are you sure you want to proceed?",
             "Proceed",
             "Cancel"))
         {
-            if (Directory.Exists(s_ReadmeSourceDirectory))
+            if (Directory.Exists(sReadmeSourceDirectory))
             {
-                FileUtil.DeleteFileOrDirectory(s_ReadmeSourceDirectory);
-                FileUtil.DeleteFileOrDirectory(s_ReadmeSourceDirectory + ".meta");
+                FileUtil.DeleteFileOrDirectory(sReadmeSourceDirectory);
+                FileUtil.DeleteFileOrDirectory(sReadmeSourceDirectory + ".meta");
             }
             else
             {
-                Debug.Log($"Could not find the Readme folder at {s_ReadmeSourceDirectory}");
+                Debug.Log($"Could not find the Readme folder at {sReadmeSourceDirectory}");
             }
 
             var readmeAsset = SelectReadme();
@@ -51,12 +52,12 @@ public class ReadmeEditor : Editor
         }
     }
 
-    static void SelectReadmeAutomatically()
+    private static void SelectReadmeAutomatically()
     {
-        if (!SessionState.GetBool(s_ShowedReadmeSessionStateName, false))
+        if (!SessionState.GetBool(sShowedReadmeSessionStateName, false))
         {
             var readme = SelectReadme();
-            SessionState.SetBool(s_ShowedReadmeSessionStateName, true);
+            SessionState.SetBool(sShowedReadmeSessionStateName, true);
 
             if (readme && !readme.loadedLayout)
             {
@@ -66,7 +67,7 @@ public class ReadmeEditor : Editor
         }
     }
 
-    static void LoadLayout()
+    private static void LoadLayout()
     {
         var assembly = typeof(EditorApplication).Assembly;
         var windowLayoutType = assembly.GetType("UnityEditor.WindowLayout", true);
@@ -74,7 +75,7 @@ public class ReadmeEditor : Editor
         method.Invoke(null, new object[] { Path.Combine(Application.dataPath, "TutorialInfo/Layout.wlt"), false });
     }
 
-    static Readme SelectReadme()
+    private static Readme SelectReadme()
     {
         var ids = AssetDatabase.FindAssets("Readme t:Readme");
         if (ids.Length == 1)
@@ -103,10 +104,10 @@ public class ReadmeEditor : Editor
         {
             if (readme.icon != null)
             {
-                GUILayout.Space(k_Space);
+                GUILayout.Space(KSpace);
                 GUILayout.Label(readme.icon, GUILayout.Width(iconWidth), GUILayout.Height(iconWidth));
             }
-            GUILayout.Space(k_Space);
+            GUILayout.Space(KSpace);
             GUILayout.BeginVertical();
             {
 
@@ -145,7 +146,7 @@ public class ReadmeEditor : Editor
                 }
             }
 
-            GUILayout.Space(k_Space);
+            GUILayout.Space(KSpace);
         }
 
         if (GUILayout.Button("Remove Readme Assets", ButtonStyle))
@@ -154,78 +155,73 @@ public class ReadmeEditor : Editor
         }
     }
 
-    bool m_Initialized;
+    private bool mInitialized;
 
-    GUIStyle LinkStyle
+    private GUIStyle LinkStyle
     {
-        get { return m_LinkStyle; }
+        get { return mLinkStyle; }
     }
 
-    [SerializeField]
-    GUIStyle m_LinkStyle;
+    [FormerlySerializedAs("m_LinkStyle")] [SerializeField] private GUIStyle mLinkStyle;
 
-    GUIStyle TitleStyle
+    private GUIStyle TitleStyle
     {
-        get { return m_TitleStyle; }
+        get { return mTitleStyle; }
     }
 
-    [SerializeField]
-    GUIStyle m_TitleStyle;
+    [FormerlySerializedAs("m_TitleStyle")] [SerializeField] private GUIStyle mTitleStyle;
 
-    GUIStyle HeadingStyle
+    private GUIStyle HeadingStyle
     {
-        get { return m_HeadingStyle; }
+        get { return mHeadingStyle; }
     }
 
-    [SerializeField]
-    GUIStyle m_HeadingStyle;
+    [FormerlySerializedAs("m_HeadingStyle")] [SerializeField] private GUIStyle mHeadingStyle;
 
-    GUIStyle BodyStyle
+    private GUIStyle BodyStyle
     {
-        get { return m_BodyStyle; }
+        get { return mBodyStyle; }
     }
 
-    [SerializeField]
-    GUIStyle m_BodyStyle;
+    [FormerlySerializedAs("m_BodyStyle")] [SerializeField] private GUIStyle mBodyStyle;
 
-    GUIStyle ButtonStyle
+    private GUIStyle ButtonStyle
     {
-        get { return m_ButtonStyle; }
+        get { return mButtonStyle; }
     }
 
-    [SerializeField]
-    GUIStyle m_ButtonStyle;
+    [FormerlySerializedAs("m_ButtonStyle")] [SerializeField] private GUIStyle mButtonStyle;
 
-    void Init()
+    private void Init()
     {
-        if (m_Initialized)
+        if (mInitialized)
             return;
-        m_BodyStyle = new GUIStyle(EditorStyles.label);
-        m_BodyStyle.wordWrap = true;
-        m_BodyStyle.fontSize = 14;
-        m_BodyStyle.richText = true;
+        mBodyStyle = new GUIStyle(EditorStyles.label);
+        mBodyStyle.wordWrap = true;
+        mBodyStyle.fontSize = 14;
+        mBodyStyle.richText = true;
 
-        m_TitleStyle = new GUIStyle(m_BodyStyle);
-        m_TitleStyle.fontSize = 26;
+        mTitleStyle = new GUIStyle(mBodyStyle);
+        mTitleStyle.fontSize = 26;
 
-        m_HeadingStyle = new GUIStyle(m_BodyStyle);
-        m_HeadingStyle.fontStyle = FontStyle.Bold;
-        m_HeadingStyle.fontSize = 18;
+        mHeadingStyle = new GUIStyle(mBodyStyle);
+        mHeadingStyle.fontStyle = FontStyle.Bold;
+        mHeadingStyle.fontSize = 18;
 
-        m_LinkStyle = new GUIStyle(m_BodyStyle);
-        m_LinkStyle.wordWrap = false;
+        mLinkStyle = new GUIStyle(mBodyStyle);
+        mLinkStyle.wordWrap = false;
 
         // Match selection color which works nicely for both light and dark skins
-        m_LinkStyle.normal.textColor = new Color(0x00 / 255f, 0x78 / 255f, 0xDA / 255f, 1f);
-        m_LinkStyle.stretchWidth = false;
+        mLinkStyle.normal.textColor = new Color(0x00 / 255f, 0x78 / 255f, 0xDA / 255f, 1f);
+        mLinkStyle.stretchWidth = false;
 
-        m_ButtonStyle = new GUIStyle(EditorStyles.miniButton);
-        m_ButtonStyle.fontStyle = FontStyle.Bold;
+        mButtonStyle = new GUIStyle(EditorStyles.miniButton);
+        mButtonStyle.fontStyle = FontStyle.Bold;
 
-        m_Initialized = true;
+        mInitialized = true;
     }
 
-    bool LinkLabel(GUIContent label, params GUILayoutOption[] options)
+    private bool LinkLabel(GUIContent label, params GUILayoutOption[] options)
     {
         var position = GUILayoutUtility.GetRect(label, LinkStyle, options);
 

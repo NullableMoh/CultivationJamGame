@@ -6,6 +6,11 @@ TagManager:
   tags:
   - New Mixable Food
   - Ground
+  - Rejected Particle System
+  - Accepted Particle System
+  - Heart Leaf Mixable
+  - Heart Organ
+  - New Heart Organ
   layers:
   - Default
   - TransparentFX
@@ -21,9 +26,9 @@ TagManager:
   - New Mixed Organs
   - Base Organs
   - Plant
-  - 
-  - 
-  - 
+  - Holdable
+  - Rope Pile
+  - Bed
   - 
   - 
   - 

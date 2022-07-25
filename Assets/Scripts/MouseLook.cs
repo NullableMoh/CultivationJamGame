@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    [SerializeField] float mouseSensitivity = 5f;
-    [SerializeField] Transform playerParentTransform;
+    [SerializeField] private float mouseSensitivity = 5f;
+    [SerializeField] private Transform playerParentTransform;
 
-    PlayerCharacterInputActions inputActions;
+    private PlayerCharacterInputActions inputActions;
 
-    float mouseY;
+    private float mouseY;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class MouseLook : MonoBehaviour
         inputActions.Player.Enable();
     }
 
-    void Update()
+    private void Update()
     {
         Vector2 inputVec = inputActions.Player.MouseLook.ReadValue<Vector2>();
 
