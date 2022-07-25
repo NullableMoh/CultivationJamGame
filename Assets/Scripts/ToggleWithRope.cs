@@ -17,8 +17,8 @@ public class ToggleWithRope : MonoBehaviour
     private void FindRopePile()
     {
         currentPile = FindObjectOfType<RopePile>();
-        currentPile.OnPileMergeable += OnPileMergeable;
-        currentPile.OnPileNotMergeable += OnPileNotMergeable;
+        currentPile.OnPileHit += OnPileMergeable;
+        currentPile.OnPileNotHit += OnPileNotMergeable;
         currentPile.OnPileDestroyed += RemovePile;
         currentPile.OnPileDestroyed += OnPileNotMergeable;
     }
@@ -27,8 +27,8 @@ public class ToggleWithRope : MonoBehaviour
     {
         if(!currentPile) return;
         
-        currentPile.OnPileMergeable -= OnPileMergeable;
-        currentPile.OnPileNotMergeable -= OnPileNotMergeable;
+        currentPile.OnPileHit -= OnPileMergeable;
+        currentPile.OnPileNotHit -= OnPileNotMergeable;
         currentPile.OnPileDestroyed -= RemovePile;
         currentPile.OnPileDestroyed -= OnPileNotMergeable;
     }
@@ -47,8 +47,8 @@ public class ToggleWithRope : MonoBehaviour
 
     private void RemovePile()
     {
-        currentPile.OnPileMergeable -= OnPileMergeable;
-        currentPile.OnPileNotMergeable -= OnPileNotMergeable;
+        currentPile.OnPileHit -= OnPileMergeable;
+        currentPile.OnPileNotHit -= OnPileNotMergeable;
         currentPile.OnPileDestroyed -= RemovePile;
         currentPile.OnPileDestroyed -= OnPileNotMergeable;
     }
