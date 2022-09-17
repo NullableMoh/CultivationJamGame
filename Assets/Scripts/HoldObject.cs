@@ -30,6 +30,9 @@ public class HoldObject : MonoBehaviour
 
     private void ToggleHoldObject(InputAction.CallbackContext context)
     {
+        if (!currentObj) 
+            isHeld = false;
+
         bool hitHoldable = Physics.Raycast(transform.position, transform.forward, out var hit, 20f, LayerMask.GetMask(("Holdable")));
         if (hitHoldable)
         {
@@ -51,7 +54,7 @@ public class HoldObject : MonoBehaviour
 
     private void Update()
     {
-        if(currentObj && isHeld)
-            currentObj.transform.localPosition = new Vector3(0f,0f,holdDistance);
+        if (currentObj && isHeld)
+            currentObj.transform.localPosition = new Vector3(0f, 0f, holdDistance);
     }
 }
