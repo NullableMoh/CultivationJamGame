@@ -20,6 +20,15 @@ public class PlayerMovement : MonoBehaviour
     private PlayerCharacterInputActions inputActions;
     private CharacterController characterController;
 
+    public delegate void PlayerMoveEventHandler();
+    public event PlayerMoveEventHandler OnPlayerMove;
+
+    public delegate void PlayerNotMovingEventHander();
+    public event PlayerNotMovingEventHander OnPlayerNotMoving;
+
+    public delegate void PlayerJumpEventHandler();
+    public event PlayerJumpEventHandler OnPlayerJump;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -42,7 +51,20 @@ public class PlayerMovement : MonoBehaviour
         //jump
         if(enableJump)
         {
-            gravityMoveVec.y = inputActions.Player.Jump.IsPressed() && isGrounded ? jumpPower : gravityMoveVec.y;
+            if(inputActions.Player.Jump.IsPressed() && isGrounded)
+            {
+                gravityMoveVec.y = jumpPower;
+                OnPlayerJump?.Invoke();
+            }
+        }
+
+        if(Mathf.Abs(inputVec.magnitude) >= Mathf.Epsilon)
+        {
+            OnPlayerMove?.Invoke();
+        }
+        else
+        {
+            OnPlayerNotMoving?.Invoke();
         }
     }
 

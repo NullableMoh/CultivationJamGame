@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Mixable : MonoBehaviour
 {
-    [SerializeField] private BaseOrgan baseOrgan;
-    [SerializeField] private GameObject newMixedOrgan;
+    [SerializeField] BaseOrgan baseOrgan;
+    [SerializeField] GameObject newMixedOrgan;
+    [SerializeField] GameObject mixSound;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -18,9 +19,10 @@ public class Mixable : MonoBehaviour
             GetComponent<Collider>().enabled = false;
 
             Instantiate(newMixedOrgan, organ.transform.position, Quaternion.identity);
+            Instantiate(mixSound, organ.transform.position, Quaternion.identity);
 
-            Destroy(organ);
-            Destroy(this.gameObject);
+            Destroy(organ.gameObject);
+            Destroy(gameObject);
         }
     }
 }

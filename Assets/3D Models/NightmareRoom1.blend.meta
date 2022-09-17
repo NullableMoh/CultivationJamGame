@@ -1,19 +1,9 @@
 fileFormatVersion: 2
-guid: b371456ac96694e49841784c0c868a7f
+guid: 064485a03e5c8ae48a90a81816be056c
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: BlackStone
-    second: {fileID: 2100000, guid: eebaac757d93a764a9ee09de0c2e7b24, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: TableTop
-    second: {fileID: 2100000, guid: 437721cdbba63444b816600055b22e57, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
